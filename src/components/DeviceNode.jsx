@@ -8,12 +8,12 @@ const DEVICE_ICONS = {
 };
 
 const STATE_COLORS = {
-  idle: { border: '#1e293b', shadow: 'none', bg: 'rgba(12,17,32,0.85)' },
-  sending: { border: '#00f0ff', shadow: '0 0 25px rgba(0,240,255,0.35)', bg: 'rgba(0,240,255,0.06)' },
-  receiving: { border: '#00ff88', shadow: '0 0 25px rgba(0,255,136,0.35)', bg: 'rgba(0,255,136,0.06)' },
-  rejected: { border: '#ff3355', shadow: '0 0 25px rgba(255,51,85,0.35)', bg: 'rgba(255,51,85,0.06)' },
-  accepted: { border: '#00ff88', shadow: '0 0 30px rgba(0,255,136,0.4)', bg: 'rgba(0,255,136,0.08)' },
-  checking: { border: '#f59e0b', shadow: '0 0 20px rgba(245,158,11,0.35)', bg: 'rgba(245,158,11,0.06)' },
+  idle: { border: '#1a2340', shadow: 'none', bg: 'rgba(11,16,34,0.88)' },
+  sending: { border: '#00d4e6', shadow: '0 0 25px rgba(0,212,230,0.3)', bg: 'rgba(0,212,230,0.05)' },
+  receiving: { border: '#00e87b', shadow: '0 0 25px rgba(0,232,123,0.3)', bg: 'rgba(0,232,123,0.05)' },
+  rejected: { border: '#f43f5e', shadow: '0 0 25px rgba(244,63,94,0.3)', bg: 'rgba(244,63,94,0.05)' },
+  accepted: { border: '#00e87b', shadow: '0 0 30px rgba(0,232,123,0.35)', bg: 'rgba(0,232,123,0.07)' },
+  checking: { border: '#f59e0b', shadow: '0 0 20px rgba(245,158,11,0.3)', bg: 'rgba(245,158,11,0.05)' },
 };
 
 export default function DeviceNode({ device, state = 'idle', isSender, isReceiver, onClick, filterResult }) {
@@ -42,7 +42,7 @@ export default function DeviceNode({ device, state = 'idle', isSender, isReceive
       )}
 
       <div
-        className="flex flex-col items-center gap-1.5 px-4 py-3 min-w-[110px] rounded-2xl"
+        className="flex flex-col items-center gap-2 px-5 py-3.5 min-w-[115px] rounded-2xl"
         style={{
           background: colors.bg,
           backdropFilter: 'blur(16px)',
@@ -54,12 +54,12 @@ export default function DeviceNode({ device, state = 'idle', isSender, isReceive
         {/* Role badge */}
         {(isSender || isReceiver) && (
           <div
-            className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-widest"
+            className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-widest whitespace-nowrap"
             style={{
-              background: isSender ? 'rgba(0,240,255,0.15)' : 'rgba(0,255,136,0.15)',
-              color: isSender ? '#00f0ff' : '#00ff88',
-              border: `1px solid ${isSender ? '#00f0ff44' : '#00ff8844'}`,
-              boxShadow: `0 0 10px ${isSender ? 'rgba(0,240,255,0.2)' : 'rgba(0,255,136,0.2)'}`,
+              background: isSender ? 'rgba(0,212,230,0.12)' : 'rgba(0,232,123,0.12)',
+              color: isSender ? '#00d4e6' : '#00e87b',
+              border: `1px solid ${isSender ? 'rgba(0,212,230,0.25)' : 'rgba(0,232,123,0.25)'}`,
+              boxShadow: `0 0 10px ${isSender ? 'rgba(0,212,230,0.15)' : 'rgba(0,232,123,0.15)'}`,
             }}
           >
             {isSender ? '📤 Sender' : '📥 Receiver'}
@@ -70,10 +70,10 @@ export default function DeviceNode({ device, state = 'idle', isSender, isReceive
         <span className="text-2xl drop-shadow-lg">{DEVICE_ICONS[device.type] || '🖥️'}</span>
 
         {/* Device name */}
-        <span className="text-[11px] font-bold text-text-primary tracking-wide">{device.name}</span>
+        <span className="text-xs font-semibold text-text-primary tracking-wide">{device.name}</span>
 
         {/* IP & MAC */}
-        <div className="text-[9px] text-text-muted text-center space-y-0 font-mono">
+        <div className="text-[10px] text-text-muted text-center font-mono leading-relaxed">
           <div>{device.ip}</div>
           <div className="opacity-60">{device.mac.slice(0, 11)}…</div>
         </div>
@@ -83,12 +83,12 @@ export default function DeviceNode({ device, state = 'idle', isSender, isReceive
           <motion.div
             initial={{ opacity: 0, scale: 0.5, y: 5 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            className="absolute -bottom-3 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full text-[9px] font-bold whitespace-nowrap"
+            className="absolute -bottom-3.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full text-[10px] font-bold whitespace-nowrap"
             style={{
-              background: filterResult === 'accepted' ? 'rgba(0,255,136,0.15)' : 'rgba(255,51,85,0.15)',
-              color: filterResult === 'accepted' ? '#00ff88' : '#ff3355',
-              border: `1px solid ${filterResult === 'accepted' ? '#00ff8844' : '#ff335544'}`,
-              boxShadow: `0 0 10px ${filterResult === 'accepted' ? 'rgba(0,255,136,0.2)' : 'rgba(255,51,85,0.2)'}`,
+              background: filterResult === 'accepted' ? 'rgba(0,232,123,0.12)' : 'rgba(244,63,94,0.12)',
+              color: filterResult === 'accepted' ? '#00e87b' : '#f43f5e',
+              border: `1px solid ${filterResult === 'accepted' ? 'rgba(0,232,123,0.25)' : 'rgba(244,63,94,0.25)'}`,
+              boxShadow: `0 0 10px ${filterResult === 'accepted' ? 'rgba(0,232,123,0.15)' : 'rgba(244,63,94,0.15)'}`,
             }}
           >
             {filterResult === 'accepted' ? '✔ MAC Match' : '✘ Dropped'}

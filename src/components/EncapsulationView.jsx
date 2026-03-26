@@ -40,23 +40,23 @@ export default function EncapsulationView({ activeLayer, packetLayers = [] }) {
   const detail = activeLayer >= 0 ? ENCAP_DETAILS[activeLayer] : null;
 
   return (
-    <div className="panel-encap p-4 space-y-3 h-full flex flex-col overflow-y-auto">
+    <div className="panel-encap p-6 h-full flex flex-col overflow-y-auto" style={{ gap: '16px' }}>
       {/* Title */}
-      <div className="flex items-center gap-3 pb-2 border-b border-neon-cyan/10">
-        <div className="w-9 h-9 rounded-xl bg-neon-cyan/10 border border-neon-cyan/30 flex items-center justify-center text-lg"
-          style={{ boxShadow: '0 0 15px rgba(0,240,255,0.15)' }}>
+      <div className="flex items-center gap-4 pb-4" style={{ borderBottom: '1px solid rgba(0,212,230,0.1)' }}>
+        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg"
+          style={{ background: 'rgba(0,212,230,0.08)', border: '1px solid rgba(0,212,230,0.2)', boxShadow: '0 0 15px rgba(0,212,230,0.1)' }}>
           📤
         </div>
         <div>
-          <h3 className="text-sm font-bold text-neon-cyan text-glow-cyan tracking-wide">
+          <h3 className="text-[14px] font-bold text-neon-cyan text-glow-cyan tracking-wide">
             SENDER — ENCAPSULATION
           </h3>
-          <p className="text-[10px] text-text-muted">Wrapping data layer by layer ⬇</p>
+          <p className="text-[11px] text-text-muted mt-1">Wrapping data layer by layer ⬇</p>
         </div>
       </div>
 
       {/* Layer Steps */}
-      <div className="space-y-1">
+      <div className="flex flex-col gap-1.5">
         {LAYERS.map((layer, idx) => {
           const isActive = idx === activeLayer;
           const isPast = idx < activeLayer;
@@ -69,11 +69,11 @@ export default function EncapsulationView({ activeLayer, packetLayers = [] }) {
                 style={{
                   '--layer-color': layer.color,
                   background: isActive
-                    ? `linear-gradient(135deg, ${layer.bg}, rgba(5,8,16,0.6))`
+                    ? `linear-gradient(135deg, ${layer.bg}, rgba(6,8,15,0.6))`
                     : isPast
                     ? `${layer.bg}`
-                    : 'rgba(5,8,16,0.4)',
-                  border: `1px solid ${isActive ? layer.color + '66' : isPast ? layer.color + '33' : '#1e293b44'}`,
+                    : 'rgba(6,8,15,0.4)',
+                  border: `1px solid ${isActive ? layer.color + '66' : isPast ? layer.color + '33' : '#1a234044'}`,
                   opacity: isFuture ? 0.4 : 1,
                   boxShadow: isActive ? `0 0 20px ${layer.color}15, inset 0 0 20px ${layer.color}08` : 'none',
                 }}
@@ -81,19 +81,19 @@ export default function EncapsulationView({ activeLayer, packetLayers = [] }) {
                 transition={{ duration: 1.5, repeat: Infinity }}
               >
                 {/* Step header */}
-                <div className="flex items-center gap-2.5 mb-1.5">
+                <div className="flex items-center gap-3 mb-2">
                   <div
                     className="step-badge"
                     style={{
                       borderColor: isActive ? layer.color : isPast ? layer.color + '88' : '#334155',
                       background: isActive ? layer.color + '22' : 'transparent',
-                      color: isActive ? layer.color : isPast ? layer.color + 'aa' : '#475569',
+                      color: isActive ? layer.color : isPast ? layer.color + 'aa' : '#5c6b8a',
                     }}
                   >
                     {isPast ? '✓' : idx + 1}
                   </div>
-                  <span className="text-[10px] mr-auto" style={{ marginRight: 'auto' }}>
-                    <span className="text-xs font-bold" style={{ color: isActive ? layer.color : isPast ? layer.color + 'cc' : '#475569' }}>
+                  <span className="flex-1">
+                    <span className="text-xs font-bold" style={{ color: isActive ? layer.color : isPast ? layer.color + 'cc' : '#5c6b8a' }}>
                       {LAYER_ICONS[idx]} {layer.shortName}
                     </span>
                   </span>
@@ -101,7 +101,7 @@ export default function EncapsulationView({ activeLayer, packetLayers = [] }) {
                     <motion.span
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider"
+                      className="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider"
                       style={{ background: layer.color + '22', color: layer.color, border: `1px solid ${layer.color}44` }}
                     >
                       Processing
@@ -117,21 +117,21 @@ export default function EncapsulationView({ activeLayer, packetLayers = [] }) {
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.3 }}
-                      className="space-y-2 pt-1"
+                      className="flex flex-col gap-2.5 pt-1"
                     >
                       {/* What is happening */}
-                      <div className="rounded-lg p-2.5" style={{ background: 'rgba(0,0,0,0.3)' }}>
-                        <div className="text-[9px] font-bold uppercase tracking-widest mb-1" style={{ color: layer.color }}>
+                      <div className="rounded-lg p-3" style={{ background: 'rgba(0,0,0,0.3)' }}>
+                        <div className="text-[10px] font-bold uppercase tracking-widest mb-1.5" style={{ color: layer.color }}>
                           ⚙️ What is happening
                         </div>
-                        <p className="text-[11px] text-text-secondary leading-relaxed">
+                        <p className="text-xs text-text-secondary leading-relaxed">
                           {detail.whatHappens}
                         </p>
                       </div>
 
                       {/* What is added */}
-                      <div className="rounded-lg p-2.5" style={{ background: 'rgba(0,0,0,0.3)' }}>
-                        <div className="text-[9px] font-bold uppercase tracking-widest mb-1" style={{ color: layer.color }}>
+                      <div className="rounded-lg p-3" style={{ background: 'rgba(0,0,0,0.3)' }}>
+                        <div className="text-[10px] font-bold uppercase tracking-widest mb-1.5" style={{ color: layer.color }}>
                           ➕ What is added
                         </div>
                         <div className="header-tag" style={{ borderColor: layer.color + '55', background: layer.color + '15', color: layer.color }}>
@@ -140,18 +140,18 @@ export default function EncapsulationView({ activeLayer, packetLayers = [] }) {
                       </div>
 
                       {/* Why it is added */}
-                      <div className="rounded-lg p-2.5" style={{ background: 'rgba(0,0,0,0.3)' }}>
-                        <div className="text-[9px] font-bold uppercase tracking-widest mb-1" style={{ color: layer.color }}>
+                      <div className="rounded-lg p-3" style={{ background: 'rgba(0,0,0,0.3)' }}>
+                        <div className="text-[10px] font-bold uppercase tracking-widest mb-1.5" style={{ color: layer.color }}>
                           ❓ Why it is added
                         </div>
-                        <p className="text-[11px] text-text-muted leading-relaxed italic">
+                        <p className="text-xs text-text-muted leading-relaxed italic">
                           {detail.whyAdded}
                         </p>
                       </div>
 
                       {/* Visual representation */}
                       <div className="text-center mt-1">
-                        <span className="text-[10px] font-mono font-bold px-3 py-1 rounded-lg inline-block"
+                        <span className="text-[11px] font-mono font-bold px-4 py-1.5 rounded-lg inline-block"
                           style={{ background: layer.color + '15', color: layer.color, border: `1px dashed ${layer.color}44` }}>
                           {detail.visual}
                         </span>
@@ -162,7 +162,7 @@ export default function EncapsulationView({ activeLayer, packetLayers = [] }) {
 
                 {/* Past layer summary */}
                 {isPast && (
-                  <div className="text-[10px] text-text-muted pl-8">
+                  <div className="text-[11px] text-text-muted pl-9">
                     ✓ {layer.encapAdded}
                   </div>
                 )}
@@ -171,7 +171,7 @@ export default function EncapsulationView({ activeLayer, packetLayers = [] }) {
               {/* Arrow between layers */}
               {idx < LAYERS.length - 1 && (
                 <div className="arrow-down" style={{
-                  '--arrow-color': isPast || isActive ? layer.color : '#1e293b',
+                  '--arrow-color': isPast || isActive ? layer.color : '#1a2340',
                   opacity: isFuture ? 0.2 : 0.6,
                 }} />
               )}
@@ -181,11 +181,11 @@ export default function EncapsulationView({ activeLayer, packetLayers = [] }) {
       </div>
 
       {/* Live Packet Build visualization */}
-      <div className="mt-auto pt-3 border-t border-neon-cyan/10">
-        <div className="text-[9px] font-bold uppercase tracking-widest text-neon-cyan/60 mb-2">
+      <div className="mt-auto pt-3" style={{ borderTop: '1px solid rgba(0,212,230,0.08)' }}>
+        <div className="text-[10px] font-bold uppercase tracking-widest mb-2.5" style={{ color: 'rgba(0,212,230,0.5)' }}>
           📦 Packet Being Built
         </div>
-        <div className="space-y-0">
+        <div>
           <AnimatePresence>
             {[...packetLayers].reverse().map((pl, idx) => {
               const ld = LAYERS.find(l => l.id === pl.layer);
@@ -194,7 +194,7 @@ export default function EncapsulationView({ activeLayer, packetLayers = [] }) {
                   key={pl.layer}
                   initial={{ opacity: 0, scaleY: 0, height: 0 }}
                   animate={{ opacity: 1, scaleY: 1, height: 'auto' }}
-                  className="font-mono text-[10px] px-3 py-1.5 border-l-2 first:rounded-t-lg last:rounded-b-lg"
+                  className="font-mono text-[11px] px-3.5 py-2 border-l-2 first:rounded-t-lg last:rounded-b-lg"
                   style={{
                     background: `linear-gradient(90deg, ${ld?.color}12, transparent)`,
                     borderLeftColor: ld?.color,
@@ -209,7 +209,7 @@ export default function EncapsulationView({ activeLayer, packetLayers = [] }) {
             })}
           </AnimatePresence>
           {packetLayers.length === 0 && (
-            <div className="text-center py-3 text-text-muted text-[10px]">Waiting to start...</div>
+            <div className="text-center py-4 text-text-muted text-[11px]">Waiting to start...</div>
           )}
         </div>
       </div>

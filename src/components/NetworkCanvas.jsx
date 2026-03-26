@@ -1,4 +1,4 @@
-import { useRef, useEffect, useMemo } from 'react';
+import { useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import DeviceNode from './DeviceNode';
 
@@ -36,12 +36,12 @@ export default function NetworkCanvas({
   const receiverPos = positions.find(d => d.id === receiverId);
 
   return (
-    <div ref={containerRef} className="glass-card relative overflow-hidden" style={{ width: '100%', height: h }}>
+    <div ref={containerRef} className="glass-card relative overflow-hidden flex-1" style={{ width: '100%', minHeight: h }}>
       {/* Grid overlay */}
       <div className="absolute inset-0 opacity-20"
         style={{
-          backgroundImage: 'linear-gradient(rgba(0,240,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,240,255,0.05) 1px, transparent 1px)',
-          backgroundSize: '30px 30px',
+          backgroundImage: 'linear-gradient(rgba(0,212,230,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,230,0.04) 1px, transparent 1px)',
+          backgroundSize: '32px 32px',
         }}
       />
 
@@ -55,7 +55,7 @@ export default function NetworkCanvas({
             y1={h / 2}
             x2={pos.x}
             y2={pos.y}
-            stroke="rgba(0,240,255,0.08)"
+            stroke="rgba(0,212,230,0.06)"
             strokeWidth="1"
             strokeDasharray="4 4"
           />
@@ -68,7 +68,7 @@ export default function NetworkCanvas({
             y1={senderPos.y}
             x2={w / 2}
             y2={h / 2}
-            stroke="#00f0ff"
+            stroke="#00d4e6"
             strokeWidth="2"
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 1 }}
@@ -80,15 +80,16 @@ export default function NetworkCanvas({
       {/* Central hub / switch */}
       <motion.div
         className="absolute z-10 flex items-center justify-center"
-        style={{ left: w / 2 - 24, top: h / 2 - 24, width: 48, height: 48 }}
+        style={{ left: w / 2 - 26, top: h / 2 - 26, width: 52, height: 52 }}
         animate={
           phase === 'TRANSMITTING'
-            ? { boxShadow: ['0 0 20px rgba(0,240,255,0.3)', '0 0 40px rgba(0,240,255,0.6)', '0 0 20px rgba(0,240,255,0.3)'] }
+            ? { boxShadow: ['0 0 20px rgba(0,212,230,0.25)', '0 0 40px rgba(0,212,230,0.5)', '0 0 20px rgba(0,212,230,0.25)'] }
             : {}
         }
         transition={{ duration: 1, repeat: Infinity }}
       >
-        <div className="w-12 h-12 rounded-full bg-bg-secondary border-2 border-neon-cyan/30 flex items-center justify-center text-xl">
+        <div className="w-13 h-13 rounded-full bg-bg-secondary flex items-center justify-center text-xl"
+          style={{ border: '2px solid rgba(0,212,230,0.2)', width: 52, height: 52 }}>
           🔀
         </div>
       </motion.div>
@@ -100,13 +101,14 @@ export default function NetworkCanvas({
             {[0, 1, 2].map((wave) => (
               <motion.div
                 key={`wave-${wave}`}
-                className="absolute rounded-full border border-neon-cyan/40 pointer-events-none"
+                className="absolute rounded-full pointer-events-none"
                 style={{
                   left: w / 2 - 10,
                   top: h / 2 - 10,
                   width: 20,
                   height: 20,
                   zIndex: 5,
+                  border: '1px solid rgba(0,212,230,0.3)',
                 }}
                 initial={{ scale: 0, opacity: 0.7 }}
                 animate={{ scale: 12, opacity: 0 }}
@@ -131,8 +133,8 @@ export default function NetworkCanvas({
             animate={{ x: w / 2 - 12, y: h / 2 - 12 }}
             transition={{ duration: 1.5, ease: 'easeInOut' }}
           >
-            <div className="w-6 h-6 rounded-md bg-neon-cyan/30 border border-neon-cyan flex items-center justify-center text-[10px]"
-              style={{ boxShadow: '0 0 15px rgba(0,240,255,0.5)' }}>
+            <div className="w-6 h-6 rounded-md flex items-center justify-center text-[10px]"
+              style={{ background: 'rgba(0,212,230,0.25)', border: '1px solid #00d4e6', boxShadow: '0 0 15px rgba(0,212,230,0.4)' }}>
               📦
             </div>
           </motion.div>
@@ -154,9 +156,9 @@ export default function NetworkCanvas({
             >
               <div className="w-6 h-6 rounded-md border flex items-center justify-center text-[10px]"
                 style={{
-                  background: result === 'accepted' ? 'rgba(0,255,136,0.3)' : result === 'rejected' ? 'rgba(255,51,85,0.3)' : 'rgba(0,240,255,0.3)',
-                  borderColor: result === 'accepted' ? '#00ff88' : result === 'rejected' ? '#ff3355' : '#00f0ff',
-                  boxShadow: `0 0 12px ${result === 'accepted' ? 'rgba(0,255,136,0.4)' : result === 'rejected' ? 'rgba(255,51,85,0.4)' : 'rgba(0,240,255,0.4)'}`,
+                  background: result === 'accepted' ? 'rgba(0,232,123,0.25)' : result === 'rejected' ? 'rgba(244,63,94,0.25)' : 'rgba(0,212,230,0.25)',
+                  borderColor: result === 'accepted' ? '#00e87b' : result === 'rejected' ? '#f43f5e' : '#00d4e6',
+                  boxShadow: `0 0 12px ${result === 'accepted' ? 'rgba(0,232,123,0.35)' : result === 'rejected' ? 'rgba(244,63,94,0.35)' : 'rgba(0,212,230,0.35)'}`,
                 }}>
                 📦
               </div>
@@ -170,13 +172,13 @@ export default function NetworkCanvas({
         {packetLost && (
           <motion.div
             className="absolute z-30 text-center"
-            style={{ left: w / 2 - 60, top: h / 2 - 30 }}
+            style={{ left: w / 2 - 65, top: h / 2 - 30 }}
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
           >
-            <div className="bg-neon-red/20 border border-neon-red rounded-xl px-4 py-2 text-sm font-bold text-neon-red"
-              style={{ boxShadow: '0 0 30px rgba(255,51,85,0.4)' }}>
+            <div className="rounded-xl px-5 py-2.5 text-sm font-bold"
+              style={{ background: 'rgba(244,63,94,0.15)', border: '1px solid #f43f5e', color: '#f43f5e', boxShadow: '0 0 30px rgba(244,63,94,0.3)' }}>
               ⚠️ PACKET LOST!
             </div>
           </motion.div>
@@ -201,8 +203,9 @@ export default function NetworkCanvas({
       ))}
 
       {/* Phase label */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20">
-        <div className="px-4 py-1.5 rounded-xl bg-bg-primary/80 border border-border-dim text-[10px] uppercase tracking-widest text-text-muted font-mono">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20">
+        <div className="px-5 py-2 rounded-xl text-[11px] uppercase tracking-widest text-text-muted font-mono font-medium"
+          style={{ background: 'rgba(6,8,15,0.85)', border: '1px solid rgba(26,35,64,0.6)' }}>
           {phase === 'TRANSMITTING' ? '📡 Signal Broadcasting...' :
            phase === 'FILTERING' ? '🔍 MAC Address Filtering...' :
            phase === 'IDLE' ? 'Ready — Select sender & receiver' :

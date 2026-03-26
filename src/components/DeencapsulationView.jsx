@@ -42,23 +42,23 @@ export default function DeencapsulationView({ activeLayer, packetLayers = [] }) 
   const activeDecapIndex = DECAP_ORDER.indexOf(activeLayer);
 
   return (
-    <div className="panel-decap p-4 space-y-3 h-full flex flex-col overflow-y-auto">
+    <div className="panel-decap p-6 h-full flex flex-col overflow-y-auto" style={{ gap: '16px' }}>
       {/* Title */}
-      <div className="flex items-center gap-3 pb-2 border-b border-neon-green/10">
-        <div className="w-9 h-9 rounded-xl bg-neon-green/10 border border-neon-green/30 flex items-center justify-center text-lg"
-          style={{ boxShadow: '0 0 15px rgba(0,255,136,0.15)' }}>
+      <div className="flex items-center gap-4 pb-4" style={{ borderBottom: '1px solid rgba(0,232,123,0.1)' }}>
+        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg"
+          style={{ background: 'rgba(0,232,123,0.08)', border: '1px solid rgba(0,232,123,0.2)', boxShadow: '0 0 15px rgba(0,232,123,0.1)' }}>
           📥
         </div>
         <div>
-          <h3 className="text-sm font-bold text-neon-green text-glow-green tracking-wide">
+          <h3 className="text-[14px] font-bold text-neon-green text-glow-green tracking-wide">
             RECEIVER — DE-ENCAPSULATION
           </h3>
-          <p className="text-[10px] text-text-muted">Unwrapping data layer by layer ⬆</p>
+          <p className="text-[11px] text-text-muted mt-1">Unwrapping data layer by layer ⬆</p>
         </div>
       </div>
 
       {/* Layer Steps (reversed order) */}
-      <div className="space-y-1">
+      <div className="flex flex-col gap-1.5">
         {DECAP_ORDER.map((layerIdx, stepIdx) => {
           const layer = LAYERS[layerIdx];
           const detail = DECAP_DETAILS[stepIdx];
@@ -73,37 +73,37 @@ export default function DeencapsulationView({ activeLayer, packetLayers = [] }) 
                 style={{
                   '--layer-color': layer.color,
                   background: isActive
-                    ? `linear-gradient(135deg, ${layer.bg}, rgba(5,8,16,0.6))`
+                    ? `linear-gradient(135deg, ${layer.bg}, rgba(6,8,15,0.6))`
                     : isPast
                     ? `${layer.bg}`
-                    : 'rgba(5,8,16,0.4)',
-                  border: `1px solid ${isActive ? layer.color + '66' : isPast ? layer.color + '33' : '#1e293b44'}`,
+                    : 'rgba(6,8,15,0.4)',
+                  border: `1px solid ${isActive ? layer.color + '66' : isPast ? layer.color + '33' : '#1a234044'}`,
                   opacity: isFuture ? 0.4 : 1,
                   boxShadow: isActive ? `0 0 20px ${layer.color}15, inset 0 0 20px ${layer.color}08` : 'none',
                 }}
                 animate={isActive ? { scale: [1, 1.01, 1] } : {}}
                 transition={{ duration: 1.5, repeat: Infinity }}
               >
-                <div className="flex items-center gap-2.5 mb-1.5">
+                <div className="flex items-center gap-3 mb-2">
                   <div
                     className="step-badge"
                     style={{
                       borderColor: isActive ? layer.color : isPast ? layer.color + '88' : '#334155',
                       background: isActive ? layer.color + '22' : 'transparent',
-                      color: isActive ? layer.color : isPast ? layer.color + 'aa' : '#475569',
+                      color: isActive ? layer.color : isPast ? layer.color + 'aa' : '#5c6b8a',
                     }}
                   >
                     {isPast ? '✓' : stepIdx + 1}
                   </div>
-                  <span className="text-xs font-bold" style={{ color: isActive ? layer.color : isPast ? layer.color + 'cc' : '#475569' }}>
+                  <span className="text-xs font-bold" style={{ color: isActive ? layer.color : isPast ? layer.color + 'cc' : '#5c6b8a' }}>
                     {LAYER_ICONS[layerIdx]} {layer.shortName}
                   </span>
                   {isActive && (
                     <motion.span
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ml-auto"
-                      style={{ background: '#00ff8822', color: '#00ff88', border: '1px solid #00ff8844' }}
+                      className="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider ml-auto"
+                      style={{ background: 'rgba(0,232,123,0.13)', color: '#00e87b', border: '1px solid rgba(0,232,123,0.25)' }}
                     >
                       Unwrapping
                     </motion.span>
@@ -118,38 +118,38 @@ export default function DeencapsulationView({ activeLayer, packetLayers = [] }) 
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.3 }}
-                      className="space-y-2 pt-1"
+                      className="flex flex-col gap-2.5 pt-1"
                     >
-                      <div className="rounded-lg p-2.5" style={{ background: 'rgba(0,0,0,0.3)' }}>
-                        <div className="text-[9px] font-bold uppercase tracking-widest mb-1" style={{ color: '#00ff88' }}>
+                      <div className="rounded-lg p-3" style={{ background: 'rgba(0,0,0,0.3)' }}>
+                        <div className="text-[10px] font-bold uppercase tracking-widest mb-1.5" style={{ color: '#00e87b' }}>
                           ⚙️ What is happening
                         </div>
-                        <p className="text-[11px] text-text-secondary leading-relaxed">
+                        <p className="text-xs text-text-secondary leading-relaxed">
                           {detail.whatHappens}
                         </p>
                       </div>
 
-                      <div className="rounded-lg p-2.5" style={{ background: 'rgba(0,0,0,0.3)' }}>
-                        <div className="text-[9px] font-bold uppercase tracking-widest mb-1" style={{ color: '#ff3355' }}>
+                      <div className="rounded-lg p-3" style={{ background: 'rgba(0,0,0,0.3)' }}>
+                        <div className="text-[10px] font-bold uppercase tracking-widest mb-1.5" style={{ color: '#f43f5e' }}>
                           ➖ What is removed
                         </div>
-                        <div className="header-tag" style={{ borderColor: '#ff335555', background: '#ff335515', color: '#ff6688' }}>
+                        <div className="header-tag" style={{ borderColor: 'rgba(244,63,94,0.35)', background: 'rgba(244,63,94,0.1)', color: '#fb7185' }}>
                           − {detail.whatRemoved}
                         </div>
                       </div>
 
-                      <div className="rounded-lg p-2.5" style={{ background: 'rgba(0,0,0,0.3)' }}>
-                        <div className="text-[9px] font-bold uppercase tracking-widest mb-1" style={{ color: '#f59e0b' }}>
+                      <div className="rounded-lg p-3" style={{ background: 'rgba(0,0,0,0.3)' }}>
+                        <div className="text-[10px] font-bold uppercase tracking-widest mb-1.5" style={{ color: '#f59e0b' }}>
                           🔄 What changes
                         </div>
-                        <p className="text-[11px] text-text-muted leading-relaxed italic">
+                        <p className="text-xs text-text-muted leading-relaxed italic">
                           {detail.whatChanges}
                         </p>
                       </div>
 
                       <div className="text-center mt-1">
-                        <span className="text-[10px] font-mono font-bold px-3 py-1 rounded-lg inline-block"
-                          style={{ background: '#00ff8815', color: '#00ff88', border: '1px dashed #00ff8844' }}>
+                        <span className="text-[11px] font-mono font-bold px-4 py-1.5 rounded-lg inline-block"
+                          style={{ background: 'rgba(0,232,123,0.1)', color: '#00e87b', border: '1px dashed rgba(0,232,123,0.25)' }}>
                           {detail.visual}
                         </span>
                       </div>
@@ -158,7 +158,7 @@ export default function DeencapsulationView({ activeLayer, packetLayers = [] }) 
                 </AnimatePresence>
 
                 {isPast && (
-                  <div className="text-[10px] text-text-muted pl-8">
+                  <div className="text-[11px] text-text-muted pl-9">
                     ✓ {layer.decapRemoved}
                   </div>
                 )}
@@ -166,7 +166,7 @@ export default function DeencapsulationView({ activeLayer, packetLayers = [] }) 
 
               {stepIdx < DECAP_ORDER.length - 1 && (
                 <div className="arrow-up" style={{
-                  '--arrow-color': isPast || isActive ? '#00ff88' : '#1e293b',
+                  '--arrow-color': isPast || isActive ? '#00e87b' : '#1a2340',
                   opacity: isFuture ? 0.2 : 0.6,
                 }} />
               )}
@@ -176,11 +176,11 @@ export default function DeencapsulationView({ activeLayer, packetLayers = [] }) 
       </div>
 
       {/* Remaining packet */}
-      <div className="mt-auto pt-3 border-t border-neon-green/10">
-        <div className="text-[9px] font-bold uppercase tracking-widest text-neon-green/60 mb-2">
+      <div className="mt-auto pt-3" style={{ borderTop: '1px solid rgba(0,232,123,0.08)' }}>
+        <div className="text-[10px] font-bold uppercase tracking-widest mb-2.5" style={{ color: 'rgba(0,232,123,0.5)' }}>
           📦 Remaining Packet
         </div>
-        <div className="space-y-0">
+        <div>
           <AnimatePresence>
             {[...packetLayers].reverse().map((pl) => {
               const ld = LAYERS.find(l => l.id === pl.layer);
@@ -189,7 +189,7 @@ export default function DeencapsulationView({ activeLayer, packetLayers = [] }) 
                   key={pl.layer}
                   initial={{ opacity: 1 }}
                   exit={{ opacity: 0, height: 0, scaleY: 0 }}
-                  className="font-mono text-[10px] px-3 py-1.5 border-l-2 first:rounded-t-lg last:rounded-b-lg"
+                  className="font-mono text-[11px] px-3.5 py-2 border-l-2 first:rounded-t-lg last:rounded-b-lg"
                   style={{
                     background: `linear-gradient(90deg, ${ld?.color}12, transparent)`,
                     borderLeftColor: ld?.color,
@@ -205,7 +205,7 @@ export default function DeencapsulationView({ activeLayer, packetLayers = [] }) 
             })}
           </AnimatePresence>
           {packetLayers.length === 0 && (
-            <div className="text-center py-3 text-neon-green text-[11px] font-bold">
+            <div className="text-center py-4 text-neon-green text-xs font-bold">
               ✅ Pure data remains!
             </div>
           )}
