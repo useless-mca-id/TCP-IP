@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-primary: #0a0e17;
-  --color-bg-secondary: #111827;
-  --color-bg-card: #1a1f2e;
-  --color-bg-glass: rgba(17, 24, 39, 0.7);
+  --color-bg-primary: #050810;
+  --color-bg-secondary: #0c1120;
+  --color-bg-card: #111827;
+  --color-bg-glass: rgba(12, 17, 32, 0.85);
   --color-neon-cyan: #00f0ff;
   --color-neon-magenta: #ff00e5;
   --color-neon-green: #00ff88;
@@ -28,11 +28,16 @@
 /* ── Global Resets ───────────────────────────────── */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap');
+}
+
 html, body, #root {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
   background: var(--color-bg-primary);
   color: var(--color-text-primary);
 }
@@ -40,97 +45,299 @@ html, body, #root {
 /* ── Circuit Background ─────────────────────────── */
 #root {
   background-image:
-    radial-gradient(circle at 20% 50%, rgba(0,240,255,0.03) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255,0,229,0.03) 0%, transparent 50%),
-    linear-gradient(rgba(0,240,255,0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,240,255,0.02) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+    radial-gradient(circle at 15% 50%, rgba(0,240,255,0.04) 0%, transparent 50%),
+    radial-gradient(circle at 85% 20%, rgba(255,0,229,0.04) 0%, transparent 50%),
+    radial-gradient(circle at 50% 80%, rgba(0,255,136,0.03) 0%, transparent 40%),
+    linear-gradient(rgba(0,240,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,240,255,0.025) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px, 32px 32px;
 }
 
 /* ── Scrollbar ──────────────────────────────────── */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--color-bg-primary); }
-::-webkit-scrollbar-thumb { background: var(--color-neon-cyan); border-radius: 3px; }
-
-/* ── Glow Utilities ─────────────────────────────── */
-.glow-cyan { box-shadow: 0 0 15px rgba(0,240,255,0.3), inset 0 0 15px rgba(0,240,255,0.05); }
-.glow-magenta { box-shadow: 0 0 15px rgba(255,0,229,0.3), inset 0 0 15px rgba(255,0,229,0.05); }
-.glow-green { box-shadow: 0 0 15px rgba(0,255,136,0.3), inset 0 0 15px rgba(0,255,136,0.05); }
-.glow-red { box-shadow: 0 0 15px rgba(255,51,85,0.3), inset 0 0 15px rgba(255,51,85,0.05); }
-
-.text-glow-cyan { text-shadow: 0 0 10px rgba(0,240,255,0.5); }
-.text-glow-magenta { text-shadow: 0 0 10px rgba(255,0,229,0.5); }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0,240,255,0.3); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,240,255,0.5); }
 
 /* ── Glass Card ─────────────────────────────────── */
 .glass-card {
   background: var(--color-bg-glass);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--color-border-dim);
-  border-radius: 12px;
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(30, 41, 59, 0.8);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+/* ── Encap / Decap Panel Themes ─────────────────── */
+.panel-encap {
+  background: linear-gradient(135deg, rgba(0,240,255,0.04) 0%, rgba(12,17,32,0.9) 50%, rgba(0,240,255,0.02) 100%);
+  border: 1px solid rgba(0,240,255,0.12);
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(0,240,255,0.05), inset 0 1px 0 rgba(0,240,255,0.05);
+}
+
+.panel-decap {
+  background: linear-gradient(135deg, rgba(0,255,136,0.04) 0%, rgba(12,17,32,0.9) 50%, rgba(0,255,136,0.02) 100%);
+  border: 1px solid rgba(0,255,136,0.12);
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(0,255,136,0.05), inset 0 1px 0 rgba(0,255,136,0.05);
 }
 
 /* ── Neon Button ────────────────────────────────── */
 .neon-btn {
   padding: 8px 20px;
   border: 1px solid var(--color-neon-cyan);
-  border-radius: 8px;
-  background: rgba(0,240,255,0.08);
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(0,240,255,0.08), rgba(0,240,255,0.03));
   color: var(--color-neon-cyan);
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 12px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 .neon-btn:hover {
-  background: rgba(0,240,255,0.18);
-  box-shadow: 0 0 20px rgba(0,240,255,0.3);
+  background: linear-gradient(135deg, rgba(0,240,255,0.2), rgba(0,240,255,0.08));
+  box-shadow: 0 0 25px rgba(0,240,255,0.25), inset 0 0 15px rgba(0,240,255,0.05);
+  transform: translateY(-1px);
 }
+.neon-btn:active { transform: translateY(0); }
 .neon-btn:disabled {
-  opacity: 0.4;
+  opacity: 0.35;
   cursor: not-allowed;
+  transform: none;
 }
 .neon-btn.magenta {
   border-color: var(--color-neon-magenta);
-  background: rgba(255,0,229,0.08);
+  background: linear-gradient(135deg, rgba(255,0,229,0.08), rgba(255,0,229,0.03));
   color: var(--color-neon-magenta);
 }
 .neon-btn.magenta:hover {
-  background: rgba(255,0,229,0.18);
-  box-shadow: 0 0 20px rgba(255,0,229,0.3);
+  background: linear-gradient(135deg, rgba(255,0,229,0.2), rgba(255,0,229,0.08));
+  box-shadow: 0 0 25px rgba(255,0,229,0.25), inset 0 0 15px rgba(255,0,229,0.05);
 }
 .neon-btn.green {
   border-color: var(--color-neon-green);
-  background: rgba(0,255,136,0.08);
+  background: linear-gradient(135deg, rgba(0,255,136,0.08), rgba(0,255,136,0.03));
   color: var(--color-neon-green);
 }
 .neon-btn.green:hover {
-  background: rgba(0,255,136,0.18);
-  box-shadow: 0 0 20px rgba(0,255,136,0.3);
+  background: linear-gradient(135deg, rgba(0,255,136,0.2), rgba(0,255,136,0.08));
+  box-shadow: 0 0 25px rgba(0,255,136,0.25), inset 0 0 15px rgba(0,255,136,0.05);
 }
 .neon-btn.red {
   border-color: var(--color-neon-red);
-  background: rgba(255,51,85,0.08);
+  background: linear-gradient(135deg, rgba(255,51,85,0.08), rgba(255,51,85,0.03));
   color: var(--color-neon-red);
 }
 .neon-btn.red:hover {
-  background: rgba(255,51,85,0.18);
-  box-shadow: 0 0 20px rgba(255,51,85,0.3);
+  background: linear-gradient(135deg, rgba(255,51,85,0.2), rgba(255,51,85,0.08));
+  box-shadow: 0 0 25px rgba(255,51,85,0.25), inset 0 0 15px rgba(255,51,85,0.05);
+}
+
+/* ── Glow Utilities ─────────────────────────────── */
+.glow-cyan { box-shadow: 0 0 20px rgba(0,240,255,0.25), 0 0 60px rgba(0,240,255,0.08); }
+.glow-green { box-shadow: 0 0 20px rgba(0,255,136,0.25), 0 0 60px rgba(0,255,136,0.08); }
+.glow-magenta { box-shadow: 0 0 20px rgba(255,0,229,0.25), 0 0 60px rgba(255,0,229,0.08); }
+.glow-red { box-shadow: 0 0 20px rgba(255,51,85,0.25), 0 0 60px rgba(255,51,85,0.08); }
+
+.text-glow-cyan { text-shadow: 0 0 12px rgba(0,240,255,0.6), 0 0 30px rgba(0,240,255,0.2); }
+.text-glow-green { text-shadow: 0 0 12px rgba(0,255,136,0.6), 0 0 30px rgba(0,255,136,0.2); }
+.text-glow-magenta { text-shadow: 0 0 12px rgba(255,0,229,0.6), 0 0 30px rgba(255,0,229,0.2); }
+
+/* ── Form styling ───────────────────────────────── */
+select, input[type="text"] {
+  background: rgba(5, 8, 16, 0.8) !important;
+  border: 1px solid rgba(30, 41, 59, 0.8) !important;
+  border-radius: 10px !important;
+  color: #e2e8f0 !important;
+  font-size: 12px !important;
+  padding: 8px 12px !important;
+  transition: all 0.2s ease !important;
+}
+select:focus, input[type="text"]:focus {
+  border-color: rgba(0,240,255,0.5) !important;
+  box-shadow: 0 0 15px rgba(0,240,255,0.1) !important;
+  outline: none !important;
+}
+select option {
+  background: #0c1120;
+  color: #e2e8f0;
+}
+
+/* ── Slider ─────────────────────────────────────── */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: linear-gradient(90deg, rgba(0,240,255,0.3), rgba(0,240,255,0.1));
+  border-radius: 4px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-neon-cyan);
+  box-shadow: 0 0 10px rgba(0,240,255,0.5);
+  cursor: pointer;
+}
+
+/* ── Checkbox ───────────────────────────────────── */
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,51,85,0.4);
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+}
+input[type="checkbox"]:checked {
+  background: rgba(255,51,85,0.2);
+  border-color: var(--color-neon-red);
+  box-shadow: 0 0 10px rgba(255,51,85,0.3);
+}
+input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: -2px;
+  left: 2px;
+  font-size: 11px;
+  color: var(--color-neon-red);
+  font-weight: bold;
+}
+
+/* ── Layer visual wrapper (for encap/decap) ────── */
+.layer-wrapper {
+  position: relative;
+  border-radius: 12px;
+  padding: 12px 14px;
+  transition: all 0.3s ease;
+}
+.layer-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--layer-color, #1e293b) 0%, transparent 60%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+}
+
+/* ── Animated gradients for headers ─────────────── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer-bg {
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
 }
 
 /* ── Pulse animation ────────────────────────────── */
 @keyframes pulse-glow {
-  0%, 100% { opacity: 0.6; }
+  0%, 100% { opacity: 0.5; }
   50% { opacity: 1; }
 }
 .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
 
-@keyframes signal-wave {
-  0% { transform: scale(0); opacity: 0.8; }
-  100% { transform: scale(4); opacity: 0; }
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+.animate-float { animation: float 3s ease-in-out infinite; }
+
+/* ── Packet nesting visual ──────────────────────── */
+.packet-nest {
+  border-radius: 10px;
+  border: 1.5px solid;
+  padding: 8px;
+  margin: 4px 0;
+  position: relative;
+  transition: all 0.4s ease;
+}
+.packet-nest-inner {
+  border-radius: 8px;
+  border: 1.5px solid;
+  padding: 8px;
+  transition: all 0.4s ease;
 }
 
-/* ── Layer Colors ───────────────────────────────── */
-.layer-application { background: rgba(168,85,247,0.15); border-color: var(--color-layer-application); color: var(--color-layer-application); }
-.layer-transport { background: rgba(59,130,246,0.15); border-color: var(--color-layer-transport); color: var(--color-layer-transport); }
-.layer-network { background: rgba(34,197,94,0.15); border-color: var(--color-layer-network); color: var(--color-layer-network); }
-.layer-datalink { background: rgba(245,158,11,0.15); border-color: var(--color-layer-datalink); color: var(--color-layer-datalink); }
-.layer-physical { background: rgba(239,68,68,0.15); border-color: var(--color-layer-physical); color: var(--color-layer-physical); }
+/* ── Arrow connector (vertical) ─────────────────── */
+.arrow-down {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  position: relative;
+}
+.arrow-down::after {
+  content: '';
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--arrow-color, #00f0ff), transparent);
+}
+.arrow-down::before {
+  content: '▼';
+  position: absolute;
+  bottom: -2px;
+  font-size: 8px;
+  color: var(--arrow-color, #00f0ff);
+}
+.arrow-up {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  position: relative;
+}
+.arrow-up::after {
+  content: '';
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to top, var(--arrow-color, #00ff88), transparent);
+}
+.arrow-up::before {
+  content: '▲';
+  position: absolute;
+  top: -2px;
+  font-size: 8px;
+  color: var(--arrow-color, #00ff88);
+}
+
+/* ── Header tag ─────────────────────────────────── */
+.header-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-family: 'Consolas', 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border: 1px solid;
+}
+
+/* ── Step number badge ──────────────────────────── */
+.step-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 800;
+  border: 2px solid;
+  flex-shrink: 0;
+}
